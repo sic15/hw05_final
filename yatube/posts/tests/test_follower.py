@@ -18,7 +18,7 @@ class PostURLTests(TestCase):
         self.authorized_client1.force_login(self.user1)
 
     def test_post_in_followers(self):
-        """Новая запись пользователя появляется в ленте тех, 
+        """Новая запись пользователя появляется в ленте тех,
         кто на него подписан."""
         form_data = {'text': 'Тестовый пост'}
         self.authorized_client.post(reverse('posts:post_create'),
@@ -32,7 +32,7 @@ class PostURLTests(TestCase):
         self.assertIn('Тестовый пост', response.content.decode())
 
     def test_post_in_not_followers(self):
-        """Новая запись пользователя не появляется в ленте тех, 
+        """Новая запись пользователя не появляется в ленте тех,
         кто на него не подписан."""
         form_data = {'text': 'Тестовый пост'}
         self.authorized_client.post(reverse('posts:post_create'),
