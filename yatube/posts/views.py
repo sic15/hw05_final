@@ -136,10 +136,10 @@ def follow_index(request):
 def profile_follow(request, username):
     # Подписаться на автора
     user = get_object_or_404(User, username=username)
-    try:
-        Follow.objects.get(author=user, user=request.user)
-    except:
-        if user != request.user: 
+    if Follow.objects.filter(author=user, user=request.user).count()!=0:
+        return redirect('posts:profile', username=username)
+    else:
+        if user != request.user:
             Follow.objects.create(author=user, user=request.user)
     return redirect('posts:profile', username=username)
 

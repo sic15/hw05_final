@@ -32,7 +32,6 @@ class PaginatorViewsTest(TestCase):
         self.authorized_client.force_login(self.user)
 
     def tearDown(self):
-        #super().tearDown()
         cache.clear()
 
     def test_padjinator_index_records(self):
