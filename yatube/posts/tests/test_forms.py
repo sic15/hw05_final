@@ -155,7 +155,7 @@ class FormTests(TestCase):
             'image': file_field,
         }
         self.authorized_client.post(reverse('posts:post_create'),
-                                               data=form_data,
-                                               follow=True
-                                               )
+                                    data=form_data,
+                                    follow=True
+                                    )
         self.assertEqual(Post.objects.count(), posts_count)
