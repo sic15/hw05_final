@@ -1,14 +1,13 @@
-from posts.models import Group, Post, Comment
-from django.test import Client, TestCase, override_settings
-from django.urls import reverse
-from django.contrib.auth import get_user_model
-
 import shutil
 import tempfile
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import Client, TestCase, override_settings
+from django.urls import reverse
 
+from posts.models import Comment, Group, Post
 
 User = get_user_model()
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
@@ -154,8 +153,13 @@ class FormTests(TestCase):
             'text': 'Тестовый текст1',
             'image': file_field,
         }
-        self.authorized_client.post(reverse('posts:post_create'),
-                                    data=form_data,
-                                    follow=True
-                                    )
+        response = self.authorized_client.post(reverse('posts:post_create'),
+                                               data=form_data,
+                                               follow=True
+                                               )
         self.assertEqual(Post.objects.count(), posts_count)
+        super().assertFormError(
+            response,
+            'form',
+            'image',
+            'Загрузите правильное изображение. Файл, который вы загрузили, поврежден или не является изображением.')

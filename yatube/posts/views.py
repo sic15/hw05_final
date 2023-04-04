@@ -3,8 +3,8 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_page
 
-from .forms import PostForm, CommentForm
-from .models import Group, Post, User, Comment, Follow
+from .forms import CommentForm, PostForm
+from .models import Comment, Follow, Group, Post, User
 
 POSTS_LIMIT = 10
 CACHE_TIME = 20
@@ -23,8 +23,7 @@ def index(request):
 
 
 def group_posts(request, slug):
-    group = get_object_or_404(
-        Group.objects.select_related(), slug=slug)
+    group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()
     paginator = Paginator(posts, POSTS_LIMIT)
     page_number = request.GET.get('page')
@@ -137,7 +136,7 @@ def follow_index(request):
 def profile_follow(request, username):
     # Подписаться на автора
     user = get_object_or_404(User, username=username)
-    if Follow.objects.filter(author=user, user=request.user).count() != 0:
+    if Follow.objects.filter(author=user, user=request.user).exists():
         return redirect('posts:profile', username=username)
     if user != request.user:
         Follow.objects.create(author=user, user=request.user)

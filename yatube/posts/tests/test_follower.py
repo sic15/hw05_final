@@ -69,6 +69,6 @@ class PostURLTests(TestCase):
             reverse('posts:profile_follow', args=['TestName']),
             follow=True)
         # Проверяем, что удалось отписаться
-        response1 = self.authorized_client1.get(
+        response = self.authorized_client1.get(
             reverse('posts:profile_unfollow', args=['TestName']))
-        self.assertNotIn('Тестовый пост', response1.content.decode())
+        self.assertNotIn('Тестовый пост', response.content.decode())

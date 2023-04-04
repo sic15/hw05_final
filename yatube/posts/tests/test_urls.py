@@ -1,8 +1,9 @@
-from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from posts.models import Group, Post
-from django.urls import reverse
 from django.core.cache import cache
+from django.test import Client, TestCase
+from django.urls import reverse
+
+from posts.models import Group, Post
 
 User = get_user_model()
 

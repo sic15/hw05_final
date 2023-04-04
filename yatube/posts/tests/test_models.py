@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from ..models import Group, Post
+from ..models import SYMBOLS_COUNT, Group, Post
 
 User = get_user_model()
 
@@ -21,12 +21,15 @@ class PostModelTest(TestCase):
             text='Тестовый пост',
         )
 
-    def test_models_have_correct_object_names(self):
-        """Проверяем, что у моделей корректно работает __str__."""
-        group = PostModelTest.group
+    def test_model_Post_have_correct_object_names(self):
+        """Проверяем, что у модели Post корректно работает __str__."""
         post = PostModelTest.post
+        self.assertTrue(str(post), self.post.text[:SYMBOLS_COUNT])
+
+    def test_model_Group_have_correct_object_names(self):
+        """Проверяем, что у модели Group корректно работает __str__."""
+        group = PostModelTest.group
         self.assertTrue(str(group), 'Тестовая группа')
-        self.assertTrue(str(post), 'Тестовый пост')
 
     def test_verbose_name(self):
         """verbose_name в полях совпадает с ожидаемым."""
