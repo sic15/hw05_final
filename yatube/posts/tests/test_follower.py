@@ -1,9 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
-from django import forms
-from posts.models import Group, Post
-from django.core.cache import cache
 
 User = get_user_model()
 
@@ -21,7 +18,8 @@ class PostURLTests(TestCase):
         self.authorized_client1.force_login(self.user1)
 
     def test_post_in_followers(self):
-        """Новая запись пользователя появляется в ленте тех, кто на него подписан."""
+        """Новая запись пользователя появляется в ленте тех,
+        кто на него подписан."""
         form_data = {'text': 'Тестовый пост'}
         self.authorized_client.post(reverse('posts:post_create'),
                                     data=form_data,
@@ -34,7 +32,8 @@ class PostURLTests(TestCase):
         self.assertIn('Тестовый пост', response.content.decode())
 
     def test_post_in_not_followers(self):
-        """Новая запись пользователя не появляется в ленте тех, кто на него не подписан."""
+        """Новая запись пользователя не появляется в ленте тех,
+        кто на него не подписан."""
         form_data = {'text': 'Тестовый пост'}
         self.authorized_client.post(reverse('posts:post_create'),
                                     data=form_data,
@@ -44,7 +43,8 @@ class PostURLTests(TestCase):
         self.assertNotIn('Тестовый пост', response.content.decode())
 
     def test_subscribe(self):
-        """Авторизованный пользователь может подписываться на других пользователей."""
+        """Авторизованный пользователь может подписываться
+        на других пользователей."""
         form_data = {'text': 'Тестовый пост'}
         self.authorized_client.post(reverse('posts:post_create'),
                                     data=form_data,
@@ -58,7 +58,8 @@ class PostURLTests(TestCase):
         self.assertIn('Тестовый пост', response.content.decode())
 
     def test_unsubscribe(self):
-        """Авторизованный пользователь может отписываться от других пользователей."""
+        """Авторизованный пользователь может отписываться
+        от других пользователей."""
         form_data = {'text': 'Тестовый пост'}
         self.authorized_client.post(reverse('posts:post_create'),
                                     data=form_data,

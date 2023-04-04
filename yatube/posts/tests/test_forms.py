@@ -154,7 +154,7 @@ class FormTests(TestCase):
             'text': 'Тестовый текст1',
             'image': file_field,
         }
-        response = self.authorized_client.post(reverse('posts:post_create'),
+        self.authorized_client.post(reverse('posts:post_create'),
                                                data=form_data,
                                                follow=True
                                                )
