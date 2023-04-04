@@ -158,7 +158,7 @@ class FormTests(TestCase):
                                                follow=True
                                                )
         self.assertEqual(Post.objects.count(), posts_count)
-        super().assertFormError(
+        self.assertFormError(
             response,
             'form',
             'image',
