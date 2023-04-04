@@ -44,7 +44,8 @@ class PaginatorViewsTest(TestCase):
         response = self.client.get(reverse('posts:index'))
         self.assertEqual(len(response.context['page_obj']), POSTS_LIMIT)
         response = self.client.get(reverse('posts:index') + '?page=2')
-        self.assertEqual(len(response.context['page_obj']), COUNT_POSTS_ON_SECNOD_PAGE)
+        self.assertEqual(
+            len(response.context['page_obj']), COUNT_POSTS_ON_SECNOD_PAGE)
 
     def test_padjinator_group_list_records(self):
         '''Проверка паджинатора на group_list странице'''
@@ -55,7 +56,8 @@ class PaginatorViewsTest(TestCase):
             reverse(
                 'posts:group_list',
                 args=[group]) + '?page=2')
-        self.assertEqual(len(response.context['page_obj']), COUNT_POSTS_ON_SECNOD_PAGE)
+        self.assertEqual(
+            len(response.context['page_obj']), COUNT_POSTS_ON_SECNOD_PAGE)
 
     def test_padjinator_profile_records(self):
         '''Проверка паджинатора на profile странице'''
@@ -66,4 +68,5 @@ class PaginatorViewsTest(TestCase):
             reverse(
                 'posts:profile',
                 args=[author]) + '?page=2')
-        self.assertEqual(len(response.context['page_obj']), COUNT_POSTS_ON_SECNOD_PAGE)
+        self.assertEqual(
+            len(response.context['page_obj']), COUNT_POSTS_ON_SECNOD_PAGE)

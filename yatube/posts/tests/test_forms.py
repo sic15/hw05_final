@@ -146,8 +146,9 @@ class FormTests(TestCase):
         если формат картинки неверный."""
         posts_count = Post.objects.count()
         file_field = SimpleUploadedFile(
-        "best_file_eva.txt",
-        b"these are the file contents!"   # note the b in front of the string [bytes]
+            "best_file_eva.txt",
+            # note the b in front of the string [bytes]
+            b"these are the file contents!"
         )
         form_data = {
             'text': 'Тестовый текст1',
