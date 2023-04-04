@@ -140,3 +140,21 @@ class FormTests(TestCase):
         self.assertRedirects(
             response, f'/auth/login/?next=/posts/{self.post.id}/comment/')
         self.assertEqual(Comment.objects.count(), comments_count)
+
+    def test_create_post_with_wrong_picture_format(self):
+        """Форма не создает запись в базе данных,
+        если формат картинки неверный."""
+        posts_count = Post.objects.count()
+        file_field = SimpleUploadedFile(
+        "best_file_eva.txt",
+        b"these are the file contents!"   # note the b in front of the string [bytes]
+        )
+        form_data = {
+            'text': 'Тестовый текст1',
+            'image': file_field,
+        }
+        response = self.authorized_client.post(reverse('posts:post_create'),
+                                               data=form_data,
+                                               follow=True
+                                               )
+        self.assertEqual(Post.objects.count(), posts_count)

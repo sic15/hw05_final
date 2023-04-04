@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+SYMBOLS_COUNT = 15
+
 
 class Group(models.Model):
     title = models.CharField('Название группы', max_length=200)
@@ -39,7 +41,7 @@ class Post(models.Model):
     )
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:SYMBOLS_COUNT]
 
     class Meta:
         ordering = ['-pub_date']
@@ -63,7 +65,7 @@ class Comment(models.Model):
         Post,
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='comments',
     )
 
